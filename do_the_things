@@ -1,6 +1,36 @@
 #!/bin/bash
 
-SOURCE_IMAGE_NAME=$1
+set -x
 
-rm ./7-color-image-converter/pictures/* ./7-color-image-converter/export/*
-python3 ./color_epd_converter.py pictures/IMG_1906.jpg
+SOURCE_IMAGE=$1
+
+# an attempt at stopping directory traversal
+if [[ "$SOURCE_IMAGE" == *..* || "$SOURCE_IMAGE" == ^/* || "$SOURCE_IMAGE" == *\\* ]]; then
+  echo "Error: Unsafe directory traversal input detected."
+  exit 1
+fi
+
+APP_DIR=/opt/mma-app
+SOURCE_IMAGE_FILENAME=$APP_DIR/$SOURCE_IMAGE
+COLOR_CONVERTER_SOURCE=$APP_DIR/7-color-image-converter/pictures
+COLOR_CONVERTER_EXPORT=$APP_DIR/7-color-image-converter/export
+
+# do we have an expected file type?
+FILETYPE=$(file --mime-type -b "$SOURCE_IMAGE_FILENAME")
+case "$FILETYPE" in
+  image/jpeg|image/png|image/gif|image/bmp)
+    echo "Valid image file"
+    ;;
+  *)
+    echo "Invalid file type"
+    exit 2
+    ;;
+esac
+
+# for now, we're cleaning house with each execution
+rm -f $COLOR_CONVERTER_SOURCE/* $COLOR_CONVERTER_EXPORT/*
+
+# more our file to its destination
+cp $SOURCE_IMAGE_FILENAME $COLOR_CONVERTER_SOURCE
+
+#python3 ./color_epd_converter.py pictures/IMG_1906.jpg
