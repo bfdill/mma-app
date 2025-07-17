@@ -1,0 +1,6 @@
+#!/bin/bash
+
+SOURCE_IMAGE_NAME=$1
+
+rm ./7-color-image-converter/pictures/* ./7-color-image-converter/export/*
+python3 ./color_epd_converter.py pictures/IMG_1906.jpg
