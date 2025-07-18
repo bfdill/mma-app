@@ -115,7 +115,8 @@ if __name__ == '__main__':
                               crop_y2=y2)
             else:
                 res = convert(img, width=img_width, height=img_height, orientation=img_orientation)
-            export_path = "./export/" + os.path.basename(file.name).split(".")[0] + ".bmp"
+            #export_path = "./export/" + os.path.basename(file.name).split(".")[0] + ".bmp"
+            export_path = "./export/ben_is_a_hack.bmp"
             res.save(export_path)
             logger.info("Wrote file to {path}".format(path=export_path))
         except TypeError as e:
@@ -132,6 +133,7 @@ if __name__ == '__main__':
                 filename = dirpath + file
                 img = Image.open(filename).convert("RGB")
                 res = convert(img, width=img_width, height=img_height, orientation=img_orientation)
-                export_path = "./export/" + file.split(".")[0] + ".bmp"
+                #export_path = "./export/" + file.split(".")[0] + ".bmp"
+                export_path = "./export/ben_is_a_hack.bmp"
                 res.save(export_path)
                 logger.info("Wrote file to {path}".format(path=export_path))

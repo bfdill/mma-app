@@ -5,15 +5,18 @@ set -x
 SOURCE_IMAGE=$1
 
 # an attempt at stopping directory traversal
-if [[ "$SOURCE_IMAGE" == *..* || "$SOURCE_IMAGE" == ^/* || "$SOURCE_IMAGE" == *\\* ]]; then
+if [[ "$SOURCE_IMAGE" == *..* || "$SOURCE_IMAGE" == ^/* || "$SOURCE_IMAGE" == *\\* ]]
+then
   echo "Error: Unsafe directory traversal input detected."
   exit 1
 fi
 
 APP_DIR=/opt/mma-app
 SOURCE_IMAGE_FILENAME=$APP_DIR/$SOURCE_IMAGE
-COLOR_CONVERTER_SOURCE=$APP_DIR/7-color-image-converter/pictures
-COLOR_CONVERTER_EXPORT=$APP_DIR/7-color-image-converter/export
+COLOR_CONVERTER_SCRIPT=$APP_DIR/7-color-image-converter/color_epd_converter.py
+COLOR_CONVERTER_EXPORT=$APP_DIR/export/ben_is_a_hack.bmp
+E_INK_PIC_DIR=$APP_DIR/e-paper/source
+E_INK_SCRIPT=$APP_DIR/e-paper/examples/mma-e-paper.py
 
 # do we have an expected file type?
 FILETYPE=$(file --mime-type -b "$SOURCE_IMAGE_FILENAME")
@@ -28,9 +31,14 @@ case "$FILETYPE" in
 esac
 
 # for now, we're cleaning house with each execution
-rm -f $COLOR_CONVERTER_SOURCE/* $COLOR_CONVERTER_EXPORT/*
+rm -f $COLOR_CONVERTER_EXPORT $E_INK_PIC_DIR/ben_is_a_hack.bmp
 
-# more our file to its destination
-cp $SOURCE_IMAGE_FILENAME $COLOR_CONVERTER_SOURCE
+# convert baby!
+python3 $COLOR_CONVERTER_SCRIPT $SOURCE_IMAGE_FILENAME
 
-#python3 ./color_epd_converter.py pictures/IMG_1906.jpg
+cp $COLOR_CONVERTER_EXPORT $E_INK_PIC_DIR/ben_is_a_hack.bmp
+
+cd e-paper
+
+# update screen
+python3 $E_INK_SCRIPT

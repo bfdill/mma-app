@@ -24,7 +24,7 @@ try:
     epd.Clear()
 
     logging.info("read img whatever")
-    Himage = Image.open(os.path.join(picdir, 'IMG_1906.bmp'))
+    Himage = Image.open(os.path.join(picdir, 'ben_is_a_hack.bmp'))
     
     font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
     font40 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 40)
