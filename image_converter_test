@@ -14,7 +14,7 @@ fi
 APP_DIR=$PWD
 SOURCE_IMAGE_FILENAME=$APP_DIR/$SOURCE_IMAGE
 COLOR_CONVERTER_SCRIPT=$APP_DIR/image-converter/color_epd_converter.py
-COLOR_CONVERTER_EXPORT=$APP_DIR/export/ben_is_a_hack.bmp
+COLOR_CONVERTER_EXPORT=$APP_DIR/converted/ben_is_a_hack.bmp
 
 # do we have an expected file type?
 FILETYPE=$(file --mime-type -b "$SOURCE_IMAGE_FILENAME")
