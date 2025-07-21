@@ -38,7 +38,7 @@ try:
     # read from an arg called overlay-text
     overlay_text = sys.argv[1] if len(sys.argv) > 1 else ""
 
-    draw.text((5, 45), overlay_text, font = font40, fill = epd.RED).
+    draw.text((5, 45), overlay_text, font = font40, fill = epd.RED)
     #draw.text((5, 45), 'days until worlds', font = font40, fill = epd.RED)
     #draw.text((5, 85), '100', font = font40, fill = epd.RED)
 
