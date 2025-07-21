@@ -33,11 +33,14 @@ def main():
     logging.info("read img whatever")
     Himage = Image.open(os.path.join(picdir, 'ben_is_a_hack.bmp'))
     
-    font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
+    # font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
     font40 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 40)
     
     draw = ImageDraw.Draw(Himage)
-    draw.text((5, 45), overlay_text, font = font40, fill = epd.RED)
+    # Right-align the overlay text
+    text_width, _ = draw.textsize(overlay_text, font=font40)
+    x_pos = Himage.width - text_width - 5  # 5px padding from right
+    draw.text((x_pos, 45), overlay_text, font=font40, fill=epd.RED)
 
     epd.display(epd.getbuffer(Himage))
 
