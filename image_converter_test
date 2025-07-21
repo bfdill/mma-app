@@ -13,7 +13,7 @@ fi
 
 APP_DIR=$PWD
 SOURCE_IMAGE_FILENAME=$APP_DIR/$SOURCE_IMAGE
-COLOR_CONVERTER_SCRIPT=$APP_DIR/7-color-image-converter/color_epd_converter.py
+COLOR_CONVERTER_SCRIPT=$APP_DIR/image-converter/color_epd_converter.py
 COLOR_CONVERTER_EXPORT=$APP_DIR/export/ben_is_a_hack.bmp
 
 # do we have an expected file type?

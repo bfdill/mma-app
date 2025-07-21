@@ -54,17 +54,17 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="Image converter to 7-Color e-paper BMP",
                                      description="Converts full color images to BMP images that can "
                                                  "be used on a 7 color e-paper display."
-                                                 "Images are saved to ./export/",
+                                                 "Images are saved to ./converted/",
                                      epilog="MIT License",
                                      usage='%(prog)s [options]',
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('filename',
                         nargs='?',
                         help="If no file is specified, the converter will walk through all files in"
-                             "./pictures/ and save those files to ./export/",
+                             "./pictures/ and save those files to ./converted/",
                         type=argparse.FileType('rb'))
     parser.add_argument('--orientation', '-o',
-                        default="portrait",
+                        default="landscape",
                         help="Orientation of the image. Specify either portrait or landscape.")
     parser.add_argument('--width',
                         default=480,
@@ -116,7 +116,7 @@ if __name__ == '__main__':
             else:
                 res = convert(img, width=img_width, height=img_height, orientation=img_orientation)
             #export_path = "./export/" + os.path.basename(file.name).split(".")[0] + ".bmp"
-            export_path = "./export/ben_is_a_hack.bmp"
+            export_path = "./converted/ben_is_a_hack.bmp"
             res.save(export_path)
             logger.info("Wrote file to {path}".format(path=export_path))
         except TypeError as e:
@@ -134,6 +134,6 @@ if __name__ == '__main__':
                 img = Image.open(filename).convert("RGB")
                 res = convert(img, width=img_width, height=img_height, orientation=img_orientation)
                 #export_path = "./export/" + file.split(".")[0] + ".bmp"
-                export_path = "./export/ben_is_a_hack.bmp"
+                export_path = "./converted/ben_is_a_hack.bmp"
                 res.save(export_path)
                 logger.info("Wrote file to {path}".format(path=export_path))

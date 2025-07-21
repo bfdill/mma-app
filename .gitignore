@@ -1,2 +1,8 @@
-images/*
-!images/.gitkeep
+# allowing images for now to simplify development
+# images/*
+# !images/.gitkeep
+
+.DS_Store
+
+converted/*
+!converted/.gitkeep
