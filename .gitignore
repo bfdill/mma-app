@@ -6,3 +6,5 @@
 
 converted/*
 !converted/.gitkeep
+
+image-converter-venv
