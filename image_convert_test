@@ -1,0 +1,35 @@
+#!/bin/bash
+
+set -x
+
+SOURCE_IMAGE=$1
+
+# an attempt at stopping directory traversal
+if [[ "$SOURCE_IMAGE" == *..* || "$SOURCE_IMAGE" == ^/* || "$SOURCE_IMAGE" == *\\* ]]
+then
+  echo "Error: Unsafe directory traversal input detected."
+  exit 1
+fi
+
+APP_DIR=$PWD
+SOURCE_IMAGE_FILENAME=$APP_DIR/$SOURCE_IMAGE
+COLOR_CONVERTER_SCRIPT=$APP_DIR/7-color-image-converter/color_epd_converter.py
+COLOR_CONVERTER_EXPORT=$APP_DIR/export/ben_is_a_hack.bmp
+
+# do we have an expected file type?
+FILETYPE=$(file --mime-type -b "$SOURCE_IMAGE_FILENAME")
+case "$FILETYPE" in
+  image/jpeg|image/png|image/gif|image/bmp)
+    echo "Valid image file"
+    ;;
+  *)
+    echo "Invalid file type"
+    exit 2
+    ;;
+esac
+
+# for now, we're cleaning house with each execution
+rm -f $COLOR_CONVERTER_EXPORT
+
+# convert baby!
+python3 $COLOR_CONVERTER_SCRIPT $SOURCE_IMAGE_FILENAME
