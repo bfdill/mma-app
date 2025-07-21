@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Usage: ./days_until.sh YYYY-MM-DD
+if [ $# -ne 1 ]; then
+  echo "Usage: $0 YYYY-MM-DD"
+  exit 1
+fi
+
+TARGET_DATE="$1"
+
+# Try GNU date (Linux)
+if date -d "$TARGET_DATE" +%s >/dev/null 2>&1; then
+  TARGET_EPOCH=$(date -d "$TARGET_DATE" +%s)
+  TODAY_EPOCH=$(date +%s)
+# Try BSD date (macOS)
+elif date -j -f "%Y-%m-%d" "$TARGET_DATE" +%s >/dev/null 2>&1; then
+  TARGET_EPOCH=$(date -j -f "%Y-%m-%d" "$TARGET_DATE" +%s)
+  TODAY_EPOCH=$(date +%s)
+else
+  echo "Invalid date format. Use YYYY-MM-DD."
+  exit 2
+fi
+
+DAYS_LEFT=$(( (TARGET_EPOCH - TODAY_EPOCH) / 86400 ))
+
+echo "$DAYS_LEFT days until worlds"

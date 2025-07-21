@@ -17,6 +17,7 @@ COLOR_CONVERTER_SCRIPT=$APP_DIR/image-converter/color_epd_converter.py
 COLOR_CONVERTER_EXPORT=$APP_DIR/converted/ben_is_a_hack.bmp
 E_INK_PIC_DIR=$APP_DIR/e-paper/pic
 E_INK_SCRIPT=$APP_DIR/e-paper/examples/mma-e-paper.py
+DAYS_UNTIL=$($APP_DIR/days_until 2025-10-25)
 
 # do we have an expected file type?
 FILETYPE=$(file --mime-type -b "$SOURCE_IMAGE_FILENAME")
@@ -41,4 +42,4 @@ cp $COLOR_CONVERTER_EXPORT $E_INK_PIC_DIR/ben_is_a_hack.bmp
 cd e-paper
 
 # update screen
-python3 $E_INK_SCRIPT
+python3 $E_INK_SCRIPT --overlay-text "$DAYS_UNTIL"

@@ -35,8 +35,12 @@ try:
     draw = ImageDraw.Draw(Himage)
     # draw.text((5, 0), 'hello world', font = font18, fill = epd.RED)
     # draw.text((5, 20), '7.3inch e-Paper (F)', font = font24, fill = epd.YELLOW)
-    draw.text((5, 45), 'days until worlds', font = font40, fill = epd.RED)
-    draw.text((5, 85), '100', font = font40, fill = epd.RED)
+    # read from an arg called overlay-text
+    overlay_text = sys.argv[1] if len(sys.argv) > 1 else ""
+
+    draw.text((5, 45), overlay_text, font = font40, fill = epd.RED).
+    #draw.text((5, 45), 'days until worlds', font = font40, fill = epd.RED)
+    #draw.text((5, 85), '100', font = font40, fill = epd.RED)
 
     epd.display(epd.getbuffer(Himage))    # font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
 
