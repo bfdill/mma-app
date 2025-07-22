@@ -37,8 +37,9 @@ def main():
     font40 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 40)
     
     draw = ImageDraw.Draw(Himage)
-    # Right-align the overlay text
-    text_width, _ = draw.textsize(overlay_text, font=font40)
+    # Right-align the overlay text using textbbox
+    bbox = draw.textbbox((0, 0), overlay_text, font=font40)
+    text_width = bbox[2] - bbox[0]
     x_pos = Himage.width - text_width - 5  # 5px padding from right
     draw.text((x_pos, 45), overlay_text, font=font40, fill=epd.RED)
 
