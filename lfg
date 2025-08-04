@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -x
+
+# APP_DIR must be the script's directory because it could be run from anywhere
+APP_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# exit if the process is already running
+# if pgrep -f "do_the_things" > /dev/null; then
+#   echo "Process is already running. Exiting."
+#   exit 0
+# fi
+
+# pull the latest changes from the repository
+git pull origin main
+
+echo "$(date): ran lfg" >> $APP_DIR/lfg.log

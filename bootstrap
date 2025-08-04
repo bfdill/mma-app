@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -x
+
+APP_DIR=$PWD
+
+# exit if the bootstrap.ran file exists
+if [ -f "$APP_DIR/bootstrap.ran" ]; then
+  echo "Bootstrap already ran. Exiting."
+  exit 0
+fi
+
+# add a call to lfg every 1 minute
+(crontab -l 2>/dev/null | grep -v 'lfg' ; echo "*/1 * * * * $APP_DIR/lfg >> $APP_DIR/lfg.log 2>&1") | crontab -
+
+touch "$APP_DIR/bootstrap.ran"
