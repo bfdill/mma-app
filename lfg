@@ -2,16 +2,32 @@
 
 set -x
 
-# APP_DIR must be the script's directory because it could be run from anywhere
-APP_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# move to the script's directory
+# and set APP_DIR to the current working directory
+cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd
+APP_DIR="$PWD"
+
+echo "$(date): ran lfg" >> $APP_DIR/lfg.log
 
 # exit if the process is already running
-# if pgrep -f "do_the_things" > /dev/null; then
-#   echo "Process is already running. Exiting."
-#   exit 0
-# fi
+if pgrep -f "do_the_things" > /dev/null; then
+  echo "Process is already running. Exiting."
+  exit 0
+fi
 
 # pull the latest changes from the repository
 git pull origin main
 
-echo "$(date): ran lfg" >> $APP_DIR/lfg.log
+# select a random image file from APP_DIR/images
+# where the file type is one of image/jpeg|image/png|image/gif|image/bmp
+# source image should be a relative path to the APP_DIR
+SOURCE_IMAGE=$(find "$APP_DIR/images" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.bmp" \) | sort -R | head -n 1)
+SOURCE_IMAGE="${SOURCE_IMAGE#$APP_DIR/}"
+
+if [ -z "$SOURCE_IMAGE" ]; then
+  echo "No valid image files found in $APP_DIR/images"
+  exit 1
+fi
+
+# run the do_the_things script with the selected image
+"$APP_DIR/do_the_things" "$SOURCE_IMAGE"

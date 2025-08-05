@@ -10,7 +10,7 @@ if [ -f "$APP_DIR/bootstrap.ran" ]; then
   exit 0
 fi
 
-# add a call to lfg every 1 minute
-(crontab -l 2>/dev/null | grep -v 'lfg' ; echo "*/1 * * * * $APP_DIR/lfg >> $APP_DIR/lfg.log 2>&1") | crontab -
+# add a call to lfg every N minute(s)
+(crontab -l 2>/dev/null | grep -v 'lfg' ; echo "*/10 * * * * $APP_DIR/lfg >> $APP_DIR/lfg.log 2>&1") | crontab -
 
 touch "$APP_DIR/bootstrap.ran"

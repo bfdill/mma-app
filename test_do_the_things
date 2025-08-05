@@ -1,0 +1,6 @@
+#!/bin/bash
+
+while true; do
+  echo "test_doo_the_things: $(date)"
+  sleep 10
+done
